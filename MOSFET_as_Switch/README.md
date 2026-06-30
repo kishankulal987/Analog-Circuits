@@ -624,8 +624,6 @@ but not perfectly constant.
 
 # 🔧 Circuit Schematic
 
-Insert the Xschem schematic screenshot below.
-
 <p align="center">
 <img width="1250" height="508" alt="MOS as switch" src="https://github.com/user-attachments/assets/7cd507d8-501e-4a1a-8b96-c2e5e20ef4cd" />
 </p>
@@ -663,6 +661,15 @@ R_{ON}=\frac{V_{DS}}{I_D}
 ✅ Wider transistors provide lower ON resistance.
 
 ✅ MOSFET acts as a stronger switch for larger widths.
+
+---
+
+# 🔧 Circuit Schematic
+
+
+<p align="center">
+<img width="1259" height="465" alt="Mos output char schematic" src="https://github.com/user-attachments/assets/929f5da4-91e1-4411-830f-dd4fe8957b31" />
+</p>
 
 ---
 
