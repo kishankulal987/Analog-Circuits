@@ -227,7 +227,7 @@ ro = ∞
 | SPICE Engine | ngspice |
 | Supply Voltage | 1.8 V |
 | Device | NMOS |
-| Width | ______ |
+| Width | 1u|
 | Length | 0.15 µm & 1 µm |
 
 ---
