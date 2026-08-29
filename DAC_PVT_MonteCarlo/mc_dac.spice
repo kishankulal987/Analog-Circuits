@@ -1,0 +1,110 @@
+** sch_path: /home/kishan/final_project/current_steering_dac_2bit/current_steering_dac_2bit.sch
+**.subckt current_steering_dac_2bit
+XM5 net1 net2 GND GND sky130_fd_pr__nfet_01v8 L=1 W=1 nf=1 ad=0.29 as=0.29 pd=2.58 ps=2.58 nrd=0.29 nrs=0.29 sa=0 sb=0 sd=0 mult=1
++ m=1
+XM2 net2 net2 GND GND sky130_fd_pr__nfet_01v8 L=1 W=1 nf=1 ad=0.29 as=0.29 pd=2.58 ps=2.58 nrd=0.29 nrs=0.29 sa=0 sb=0 sd=0 mult=1
++ m=1
+R1 net2 VDD 92.75k m=1
+XM1 out1 net3 net1 GND sky130_fd_pr__nfet_01v8 L=0.15 W=1 nf=1 ad=0.29 as=0.29 pd=2.58 ps=2.58 nrd=0.29 nrs=0.29 sa=0 sb=0 sd=0
++ mult=1 m=1
+XM3 out2 net4 net1 GND sky130_fd_pr__nfet_01v8 L=0.15 W=1 nf=1 ad=0.29 as=0.29 pd=2.58 ps=2.58 nrd=0.29 nrs=0.29 sa=0 sb=0 sd=0
++ mult=1 m=1
+XM4 out1 A net5 GND sky130_fd_pr__nfet_01v8 L=0.15 W=1 nf=1 ad=0.29 as=0.29 pd=2.58 ps=2.58 nrd=0.29 nrs=0.29 sa=0 sb=0 sd=0
++ mult=1 m=1
+XM6 out2 net8 net5 GND sky130_fd_pr__nfet_01v8 L=0.15 W=1 nf=1 ad=0.29 as=0.29 pd=2.58 ps=2.58 nrd=0.29 nrs=0.29 sa=0 sb=0 sd=0
++ mult=1 m=1
+R2 VDD out1 5k m=1
+R5 VDD out2 5k m=1
+V7 VDD GND {VDD}
+XM7 net5 net2 GND GND sky130_fd_pr__nfet_01v8 L=1 W=1 nf=1 ad=0.29 as=0.29 pd=2.58 ps=2.58 nrd=0.29 nrs=0.29 sa=0 sb=0 sd=0 mult=1
++ m=1
+XM8 out1 net7 net6 GND sky130_fd_pr__nfet_01v8 L=0.15 W=1 nf=1 ad=0.29 as=0.29 pd=2.58 ps=2.58 nrd=0.29 nrs=0.29 sa=0 sb=0 sd=0
++ mult=1 m=1
+XM9 out2 net9 net6 GND sky130_fd_pr__nfet_01v8 L=0.15 W=1 nf=1 ad=0.29 as=0.29 pd=2.58 ps=2.58 nrd=0.29 nrs=0.29 sa=0 sb=0 sd=0
++ mult=1 m=1
+XM10 net6 net2 GND GND sky130_fd_pr__nfet_01v8 L=1 W=1 nf=1 ad=0.29 as=0.29 pd=2.58 ps=2.58 nrd=0.29 nrs=0.29 sa=0 sb=0 sd=0
++ mult=1 m=1
+V2 A GND PULSE(0 1.8 200n 1n 1n 200n 400n)
+V3 B GND PULSE(0 1.8 100n 1n 1n 100n 200n)
+x1 VDD A B net4 net3 net8 net9 net7 GND decoder
+**** begin user architecture code
+
+.lib /usr/local/share/pdk/sky130A/libs.tech/ngspice/sky130.lib.spice tt_mm
+.param VDD=1.8
+.temp 27
+.tran 1n 800n
+.meas tran I00 AVG par('(VDD-V(out1))/5k') FROM=50n TO=90n
+.meas tran I01 AVG par('(VDD-V(out1))/5k') FROM=150n TO=190n
+.meas tran I10 AVG par('(VDD-V(out1))/5k') FROM=250n TO=290n
+.meas tran I11 AVG par('(VDD-V(out1))/5k') FROM=350n TO=390n
+
+**** end user architecture code
+**.ends
+
+* expanding   symbol:  decoder.sym # of pins=9
+** sym_path: /home/kishan/final_project/current_steering_dac_2bit/decoder.sym
+** sch_path: /home/kishan/final_project/current_steering_dac_2bit/decoder.sch
+.subckt decoder VDD A B S1' S1 S2' S3' S3 GND
+*.ipin A
+*.ipin B
+*.ipin VDD
+*.ipin GND
+*.opin S1'
+*.opin S1
+*.opin S2'
+*.opin S3
+*.opin S3'
+x3 VDD A S1' B GND nor
+x1 VDD S1' S1 GND inverter
+x4 VDD A S2' GND inverter
+x6 VDD A S3' B GND nand
+x2 VDD S3' S3 GND inverter
+.ends
+
+
+* expanding   symbol:  nor.sym # of pins=5
+** sym_path: /home/kishan/final_project/current_steering_dac_2bit/nor.sym
+** sch_path: /home/kishan/final_project/current_steering_dac_2bit/nor.sch
+.subckt nor VDD B out A VSS
+*.ipin A
+*.ipin B
+*.ipin VDD
+*.ipin VSS
+*.opin out
+XM1 out A VSS GND sky130_fd_pr__nfet_01v8 L=0.15 W=1 nf=1 ad=0.29 as=0.29 pd=2.58 ps=2.58 nrd=0.29 nrs=0.29 sa=0 sb=0 sd=0 mult=1 m=1
+XM3 out B VSS GND sky130_fd_pr__nfet_01v8 L=0.15 W=1 nf=1 ad=0.29 as=0.29 pd=2.58 ps=2.58 nrd=0.29 nrs=0.29 sa=0 sb=0 sd=0 mult=1 m=1
+XM2 out A net1 VDD sky130_fd_pr__pfet_01v8 L=0.15 W=1 nf=1 ad=0.29 as=0.29 pd=2.58 ps=2.58 nrd=0.29 nrs=0.29 sa=0 sb=0 sd=0 mult=1 m=1
+XM4 net1 B VDD VDD sky130_fd_pr__pfet_01v8 L=0.15 W=1 nf=1 ad=0.29 as=0.29 pd=2.58 ps=2.58 nrd=0.29 nrs=0.29 sa=0 sb=0 sd=0 mult=1 m=1
+.ends
+
+
+* expanding   symbol:  inverter.sym # of pins=4
+** sym_path: /home/kishan/final_project/current_steering_dac_2bit/inverter.sym
+** sch_path: /home/kishan/final_project/current_steering_dac_2bit/inverter.sch
+.subckt inverter VDD Vin Vout VSS
+*.ipin VDD
+*.ipin Vin
+*.ipin VSS
+*.opin Vout
+XM1 Vout Vin VSS GND sky130_fd_pr__nfet_01v8 L=0.15 W=1 nf=1 ad=0.29 as=0.29 pd=2.58 ps=2.58 nrd=0.29 nrs=0.29 sa=0 sb=0 sd=0 mult=1 m=1
+XM2 Vout Vin VDD VDD sky130_fd_pr__pfet_01v8 L=0.15 W=1 nf=1 ad=0.29 as=0.29 pd=2.58 ps=2.58 nrd=0.29 nrs=0.29 sa=0 sb=0 sd=0 mult=1 m=1
+.ends
+
+
+* expanding   symbol:  nand.sym # of pins=5
+** sym_path: /home/kishan/final_project/current_steering_dac_2bit/nand.sym
+** sch_path: /home/kishan/final_project/current_steering_dac_2bit/nand.sch
+.subckt nand VDD A out B VSS
+*.ipin A
+*.ipin VDD
+*.ipin B
+*.ipin VSS
+*.opin out
+XM1 net1 B VSS GND sky130_fd_pr__nfet_01v8 L=0.15 W=1 nf=1 ad=0.29 as=0.29 pd=2.58 ps=2.58 nrd=0.29 nrs=0.29 sa=0 sb=0 sd=0 mult=1 m=1
+XM2 out A net1 GND sky130_fd_pr__nfet_01v8 L=0.15 W=1 nf=1 ad=0.29 as=0.29 pd=2.58 ps=2.58 nrd=0.29 nrs=0.29 sa=0 sb=0 sd=0 mult=1 m=1
+XM3 out A VDD VDD sky130_fd_pr__pfet_01v8 L=0.15 W=1 nf=1 ad=0.29 as=0.29 pd=2.58 ps=2.58 nrd=0.29 nrs=0.29 sa=0 sb=0 sd=0 mult=1 m=1
+XM4 out B VDD VDD sky130_fd_pr__pfet_01v8 L=0.15 W=1 nf=1 ad=0.29 as=0.29 pd=2.58 ps=2.58 nrd=0.29 nrs=0.29 sa=0 sb=0 sd=0 mult=1 m=1
+.ends
+
+.GLOBAL GND
+.end
